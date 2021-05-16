@@ -12,12 +12,16 @@
   </a>
 </p>
 
-> cupTournament project writed in Django for the need of WSB University.
+> cupTournament project wrote in Django for the need of WSB University.
 
 ## Install
 
 ```sh
-python3 manage.py tailwind start and python3 manage.py runserver
+when requirements.txt are installed:
+
+python3 manage.py tailwind install && python3 manage.py tailwind start
+then ctrl + c 
+python3 manage.py runserver
 ```
 
 ## Author

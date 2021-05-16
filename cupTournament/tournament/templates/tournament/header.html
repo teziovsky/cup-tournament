@@ -1,0 +1,50 @@
+<header id="header"
+        class="flex justify-between justify-center px-10 py-2 shadow-md dark:bg-gray-800 dark:text-white transition-colors">
+    {% with request.resolver_match.url_name as url_name %}
+        <nav class="flex items-center divide-x divide-primary">
+            <a class="btn-secondary text-xl {% if url_name == 'tournaments' %}active{% endif %}"
+               href="{% url 'tournaments' %}">Tournaments<span
+                    class="sr-only">(current)</span></a>
+            {% if user.is_authenticated %}
+                <a class="btn-secondary text-xl {% if url_name == 'history' %}active{% endif %}"
+                   href="{% url 'history' %}">History<span class="sr-only">(current)</span></a>
+                <a class="btn-secondary text-xl {% if url_name == 'players' %}active{% endif %}"
+                   href="{% url 'players' %}">Players<span class="sr-only">(current)</span></a>
+            {% endif %}
+            {% if user.is_superuser %}
+                <a class="btn-secondary text-xl {% if url_name == 'admin' %}active{% endif %}"
+                   href="{% url 'admin:index' %}">Admin<span class="sr-only">(current)</span></a>
+            {% endif %}
+        </nav>
+    {% endwith %}
+    <div class="flex items-center">
+        <div class="flex">
+            <span class="material-icons text-sm align-middle">&#xe518;</span>
+            <label for="toggle-theme" class="flex items-center cursor-pointer mx-2">
+                <div class="relative">
+                    <input id="toggle-theme" type="checkbox" class="hidden"/>
+                    <div class="toggle-path bg-gray-200 w-9 h-5 rounded-full shadow-inner"></div>
+                    <div class="toggle-circle absolute w-3.5 h-3.5 bg-white rounded-full shadow inset-y-0 left-0"></div>
+                </div>
+            </label>
+            <span class="material-icons text-sm align-middle mr-1">&#xe51c;</span>
+        </div>
+        {% if user.is_authenticated %}
+            <img src="https://i.pravatar.cc/100" class="ml-4 rounded-full border border-gray-600 w-11 h-11"
+                 alt="avatar zalogowanego użytkownika">
+        {% endif %}
+        <span class="ml-4 text-lg">{{ user }}</span>
+        {% if user.is_authenticated %}
+            <a class="btn-secondary ml-3"
+               title="Logout" href="{% url 'logout' %}">
+                <span class="material-icons text-base align-middle">&#xE9BA;</span>
+                <span
+                        title="logout" class="sr-only">(current)</span></a>
+        {% else %}
+            <a class="btn-secondary ml-3"
+               href="{% url 'login' %}"><span class="material-icons text-md align-middle mr-1">&#xEA77;</span>
+                Login/Register<span
+                        title="login" class="sr-only">(current)</span></a>
+        {% endif %}
+    </div>
+</header>

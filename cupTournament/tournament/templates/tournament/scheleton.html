@@ -1,0 +1,29 @@
+{% load static %}
+{% load tailwind_tags %}
+
+<!DOCTYPE html>
+<html id="html" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CupTournament - WSB Python</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    {% tailwind_css %}
+</head>
+<body>
+{% include "tournament/header.html" %}
+
+<main id="content">
+    <div class="container min-height py-7">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+{% include "tournament/footer.html" %}
+<script src="{% static "js/scripts.js" %}"></script>
+</body>
+</html>

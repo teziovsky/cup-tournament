@@ -1,0 +1,47 @@
+{% extends 'tournament/scheleton.html' %}
+{% spaceless %}
+    {% block content %}
+        <div class="min-height flex">
+            <div class="mx-auto self-center w-full xs:p-0 sm:max-w-md">
+                <h1 class="font-bold text-center text-3xl mb-5">Login</h1>
+                <div class="w-full divide-y divide-gray-200 shadow-lg bg-white dark:bg-gray-800 dark:text-white transition-colors">
+                    <form action="" method="POST" class="px-5 py-7 custom-input grid grid-cols-3 gap-y-5">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            {{ field.label_tag }}
+                            {{ field }}
+                        {% endfor %}
+                        <button type="submit" class="btn-primary w-full font-semibold col-span-3">
+                            <span class="inline-block mr-1">Login</span>
+                        </button>
+                    </form>
+                    {% if form.non_field_errors %}
+                        <div class="py-5 px-2">
+                            <div class="relative col-span-3 my-1 px-4 py-3 text-sm text-red-700 bg-red-100"
+                                 role="alert">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if messages %}
+                        <div class="py-5 px-2">
+                            {% for message in messages %}
+                                <div class="relative mx-2 px-4 py-3 leading-normal text-green-700 bg-green-100"
+                                     role="alert">
+                                    <span class="absolute text-lg inset-y-0 left-0 flex items-center m-4 material-icons">&#xe86c;</span>
+                                    <p class="ml-6">{{ message }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <p class="text-center self-center mt-4">Don't have an account? <a href="{% url 'register' %}"
+                                                                                  class="text-primary border-b border-transparent hover:border-primary focus:border-primary transition-colors">Sign
+                    Up</a>
+                </p>
+            </div>
+        </div>
+    {% endblock %}
+{% endspaceless %}

@@ -19,8 +19,14 @@
 ```sh
 when requirements.txt are installed:
 
+cd cupTournament
+python3 manage.py runserver
+
+
+if is error about tailwind, run:
+
 python3 manage.py tailwind install && python3 manage.py tailwind start
-then ctrl + c 
+ctrl + c
 python3 manage.py runserver
 ```
 

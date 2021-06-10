@@ -1,7 +1,7 @@
 {% extends 'tournament/scheleton.html' %}
 {% block content %}
     <h1 class="text-3xl mb-5">Tournaments - History</h1>
-    {% if object_list %}
+    {% if past_tournaments %}
         <div class="flex flex-wrap -mx-4">
             {% for tournament in past_tournaments %}
                 <a href="{{ tournament.get_absolute_url }}" class="group p-4 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">

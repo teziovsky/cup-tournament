@@ -6,4 +6,12 @@
        class="p-2 material-icons text-xl text-red-500 self-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
         &#xe872;
     </a>
+
+    <button class="btn btn-primary">Start tournament</button>
+
+    {% for object in players %}
+        <p>{{ object }}</p>
+    {% endfor %}
+    {{ players_length }}
+
 {% endblock %}

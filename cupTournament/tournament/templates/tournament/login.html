@@ -27,13 +27,19 @@
                     {% endif %}
                     {% if messages %}
                         <div class="py-5 px-2">
-                            {% for message in messages %}
+                            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
                                 <div class="relative mx-2 px-4 py-3 leading-normal text-green-700 bg-green-100"
                                      role="alert">
-                                    <span class="absolute text-lg inset-y-0 left-0 flex items-center m-4 material-icons">&#xe86c;</span>
+                                    <span class="absolute text-lg inset-y-0 left-0 flex items-center m-4 material-icons">&#xE000;</span>
                                     <p class="ml-6">{{ message }}</p>
                                 </div>
-                            {% endfor %}
+                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                <div class="relative mx-2 px-4 py-3 leading-normal text-red-700 bg-red-100"
+                                     role="alert">
+                                    <span class="absolute text-lg inset-y-0 left-0 flex items-center m-4 material-icons">&#xE000;</span>
+                                    <p class="ml-6">{{ message }}</p>
+                                </div>
+                            {% endif %}
                         </div>
                     {% endif %}
                 </div>

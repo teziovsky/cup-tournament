@@ -3,7 +3,8 @@ from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
-from tournament.models import Tournament
+from tournament.models import Tournament, Player
+import random
 
 
 class TournamentsView(ListView):
@@ -23,6 +24,10 @@ class DetailTournamentsView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
+        players = Player.objects.select_related().filter(tournament=kwargs['object'])
+        players_length = players.count
+        context['players'] = players
+        context['players_length'] = players_length
         return context
 
 

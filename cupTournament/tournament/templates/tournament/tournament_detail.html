@@ -63,7 +63,7 @@
                             <div class="flex justify-between items-center mb-2">
                                 <h3 class="text-xl title-font text-gray-800 break-words dark:text-gray-200 transition-colors">{{ score.player1 }}
                                     vs {{ score.player2 }}</h3>
-                                {% if user.is_superuser or user.is_authenticated and object.author == user %}
+                                {% if user.is_superuser or user.is_authenticated and object.author == user and score.score_player1 is None and score.score_player2 is None %}
                                     <a class="p-2 material-icons text-xl text-primary self-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                                        href="{{ score.get_update_url }}"><span
                                             class="material-icons text-lg text-primary align-middle mx-2">&#xe3c9;</span></a>

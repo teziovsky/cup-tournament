@@ -13,6 +13,8 @@ class PlayersView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        players = Player.objects.order_by('tournament')
+        context['players'] = players
         context['now'] = timezone.now()
         return context
 
@@ -21,19 +23,16 @@ class CreatePlayersView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Player
     fields = ['name', 'tournament']
     login_url = reverse_lazy('login')
-    success_url = reverse_lazy('players')
+    success_url = reverse_lazy('players_add')
     success_message = 'Player created successfully.'
 
     def form_valid(self, form):
         tournament_id = form.data['tournament']
-        players_length = len(Player.objects.select_related().filter(tournament=tournament_id))
+        players_length = len(Player.objects.filter(tournament=tournament_id))
         tournament_players = int(Tournament.objects.filter(id=tournament_id).first().max_players)
 
         if players_length >= tournament_players:
-            messages.error(
-                self.request,
-                "The players count can't be grater than %d" % tournament_players
-            )
+            messages.error(self.request, "The players count can't be grater than %d" % tournament_players)
             return self.form_invalid(form)
 
         return super().form_valid(form)

@@ -2,12 +2,14 @@
         class="flex justify-between justify-center px-10 py-2 shadow-md dark:bg-gray-800 dark:text-white transition-colors">
     {% with request.resolver_match.url_name as url_name %}
         <nav class="flex items-center divide-x divide-primary">
-            <a class="btn-secondary text-xl {% if url_name == 'tournaments' %}active{% endif %}"
-               href="{% url 'tournaments' %}">Tournaments<span
-                    class="sr-only">(current)</span></a>
             {% if user.is_authenticated %}
-                <a class="btn-secondary text-xl {% if url_name == 'history' %}active{% endif %}"
-                   href="{% url 'history' %}">History<span class="sr-only">(current)</span></a>
+                <a class="btn-secondary text-xl {% if url_name == 'tournaments' %}active{% endif %}"
+                   href="{% url 'tournaments' %}">Tournaments<span
+                        class="sr-only">(current)</span></a>
+            {% endif %}
+            <a class="btn-secondary text-xl {% if url_name == 'history' %}active{% endif %}"
+               href="{% url 'history' %}">History<span class="sr-only">(current)</span></a>
+            {% if user.is_authenticated %}
                 <a class="btn-secondary text-xl {% if url_name == 'players' %}active{% endif %}"
                    href="{% url 'players' %}">Players<span class="sr-only">(current)</span></a>
             {% endif %}

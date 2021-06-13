@@ -806,6 +806,21 @@ select {
 .left-1\/2 {
 	left: 50%;
 }
+.bottom-6 {
+	bottom: 1.5rem;
+}
+.bottom-8 {
+	bottom: 2rem;
+}
+.bottom-9 {
+	bottom: 2.25rem;
+}
+.bottom-10 {
+	bottom: 2.5rem;
+}
+.bottom-12 {
+	bottom: 3rem;
+}
 .z-10 {
 	z-index: 10;
 }
@@ -830,10 +845,6 @@ select {
 .my-1 {
 	margin-top: 0.25rem;
 	margin-bottom: 0.25rem;
-}
-.my-4 {
-	margin-top: 1rem;
-	margin-bottom: 1rem;
 }
 .ml-1 {
 	margin-left: 0.25rem;
@@ -879,9 +890,6 @@ select {
 }
 .inline-block {
 	display: inline-block;
-}
-.inline {
-	display: inline;
 }
 .flex {
 	display: flex;
@@ -942,6 +950,11 @@ select {
 }
 .w-6 {
 	width: 1.5rem;
+}
+.max-w-max {
+	max-width: -webkit-max-content;
+	max-width: -moz-max-content;
+	max-width: max-content;
 }
 .flex-shrink-0 {
 	flex-shrink: 0;

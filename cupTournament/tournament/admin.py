@@ -12,10 +12,6 @@ UserAdmin.add_fieldsets = (
     }),
 )
 
-admin_group = Group.objects.get_or_create(name='Administrator')
-user_group = Group.objects.get_or_create(name='User')
-anonymous_group = Group.objects.get_or_create(name='Anonymous')
-
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Tournament)

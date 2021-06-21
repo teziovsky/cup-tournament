@@ -22,7 +22,7 @@ class CreateUserForm(UserCreationForm):
         }
 
     def save(self, commit=True):
-        user = super(CreateUserForm, self).save(commit=True)
+        user = super(CreateUserForm, self).save()
         user.birth_date = self.cleaned_data['birth_date']
         if commit:
             user.save()

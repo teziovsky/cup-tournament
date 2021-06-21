@@ -1,7 +1,7 @@
 from django.contrib import admin
 from tournament.models import *
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .forms import CreateUserForm
 
 UserAdmin.add_form = CreateUserForm
@@ -11,6 +11,10 @@ UserAdmin.add_fieldsets = (
         'fields': ('username', 'email', 'birth_date', 'password1', 'password2',)
     }),
 )
+
+admin_group = Group.objects.get_or_create(name='Administrator')
+user_group = Group.objects.get_or_create(name='User')
+anonymous_group = Group.objects.get_or_create(name='Anonymous')
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

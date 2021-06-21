@@ -26,7 +26,6 @@ class UpdateScoresView(LoginRequiredMixin, UpdateView):
         return reverse('tournament_detail', kwargs={'pk': self.kwargs.get("fk")})
 
 
-# TODO: Zrefaktoryzuj metodę, żeby się różniła od tej co stworzył Pitorek
 def start_round(self, pk):
     Tournament.objects.filter(id=pk).update(is_started=True)
     scores = Scores.objects.filter(tournament=pk).order_by("round")
@@ -35,16 +34,16 @@ def start_round(self, pk):
         players = Player.objects.filter(tournament=pk)
         addScores(pk, players, 1)
     else:
-        active_round = scores.last().round
-        scores_by_round = scores.filter(round=active_round)
+        last_round = scores.last().round
+        scores_in_round = scores.filter(round=last_round)
         players = []
-        for match in scores_by_round:
-            if match.score_player1 > match.score_player2:
-                players.append(match.player1)
+        for score in scores_in_round:
+            if score.score_player1 > score.score_player2:
+                players.append(score.player1)
             else:
-                players.append(match.player2)
+                players.append(score.player2)
 
-        addScores(pk, players, active_round + 1)
+        addScores(pk, players, last_round + 1)
 
     return redirect('tournament_detail', pk)
 

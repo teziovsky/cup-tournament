@@ -1,9 +1,96 @@
 {% extends 'tournament/scheleton.html' %}
 {% block content %}
-    <h1 class="text-3xl">{{ object.name }}</h1>
-    <p>Landing page - {{ object.name }}</p>
-    <a href="{{ object.get_absolute_url }}/delete"
-       class="p-2 material-icons text-xl text-red-500 self-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-        &#xe872;
-    </a>
+    <h1 class="text-3xl mb-4">Title: {{ object.name }}</h1>
+    <div class="mb-5">
+        <p><span class="material-icons text-xl text-primary align-middle mr-2">&#xe8b5;</span> Start
+            date:
+            {{ object.start_date|date:'d.m.Y H:m' }}</p>
+        <p><span class="material-icons text-xl text-primary align-middle mr-2">&#xe7fb;</span> Max
+            players: {{ object.max_players }}</p>
+        <p>{% if object.is_started %}
+            <span class="material-icons text-xl text-primary align-middle mr-2">&#xe86c;</span>
+        {% else %}
+            <span class="material-icons text-xl text-primary align-middle mr-2">&#xe5c9;</span>
+        {% endif %} Is started: {{ object.is_started }}</p>
+        {% if winner is not empty %}
+            <p class="text-xl">
+                <span class="material-icons text-xl text-primary align-middle mr-2">&#xea23;</span> The winner is: <span
+                    class="underline">{{ winner }}</span>!
+            </p>
+        {% endif %}
+    </div>
+
+    {% if user.is_superuser or user.is_authenticated and object.author == user %}
+        {% if is_valid %}
+            {% if winner is Null %}
+                {% if object.is_started == False %}
+                    <a href="{{ tournament.get_absolute_url }}/start" class="btn btn-primary mb-4">Start tournament</a>
+                {% else %}
+                    {% if null_scores > 0 %}
+                        <div class="relative px-4 py-3 leading-normal text-red-700 bg-red-100 mb-4 max-w-max"
+                             role="alert">
+                            <span class="absolute text-lg inset-y-0 left-0 flex items-center m-4 material-icons">&#xE000;</span>
+                            <p class="ml-6 mr-1">Complete scores!</p>
+                        </div>
+                    {% else %}
+                        {% if is_last_round == False %}
+                            <a href="{{ tournament.get_absolute_url }}/start" class="btn btn-primary mb-4">Start next
+                                round</a>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <div class="relative px-4 py-3 leading-normal text-red-700 bg-red-100 max-w-max"
+                 role="alert">
+                <span class="absolute text-lg inset-y-0 left-0 flex items-center m-4 material-icons">&#xE000;</span>
+                <p class="ml-6 mr-1">To start the tournament, the number of players must
+                    be: {{ object.max_players }}.</p>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if scores is not empty %}
+        {% regroup scores by round as rounds %}
+        {% for round in rounds %}
+            <h2 class="text-2xl mb-2">
+                Round: {{ round.grouper }}
+            </h2>
+            <div class="flex flex-wrap -mx-4">
+                {% for score in round.list %}
+                    <div class="group p-4 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
+                        <div class="h-full border border-gray-400 shadow-lg p-4 dark:bg-gray-800 transition-colors">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-xl title-font text-gray-800 break-words dark:text-gray-200 transition-colors">{{ score.player1 }}
+                                    vs {{ score.player2 }}</h3>
+                                {% if user.is_superuser or user.is_authenticated and object.author == user and score.score_player1 is None and score.score_player2 is None %}
+                                    <a class="p-2 material-icons text-xl text-primary self-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                       href="{{ score.get_update_url }}"><span
+                                            class="material-icons text-lg text-primary align-middle mx-2">&#xe3c9;</span></a>
+                                {% endif %}
+                            </div>
+                            <div class="text-center flex justify-between w-full border border-1 {% if score.score_player1 > score.score_player2 %}border-gray-800 dark:border-gray-200{% else %}border-transparent{% endif %}">
+                                <p class="mr-3 inline-flex items-center text-sm py-1">
+                                    <span class="material-icons text-lg text-primary align-middle mx-2">&#xe7fd;</span>
+                                    {{ score.player1 }}:
+                                </p>
+                                <p class="inline-flex items-center text-md px-3">
+                                    {{ score.score_player1 }}
+                                </p>
+                            </div>
+                            <div class="text-center flex justify-between w-full border border-1 {% if score.score_player2 > score.score_player1 %}border-gray-800 dark:border-gray-200{% else %}border-transparent{% endif %}">
+                                <p class="mr-3 inline-flex items-center text-sm py-1">
+                                    <span class="material-icons text-lg text-primary align-middle mx-2">&#xe7fd;</span>
+                                    {{ score.player2 }}:
+                                </p>
+                                <p class="inline-flex items-center text-md px-3">
+                                    {{ score.score_player2 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

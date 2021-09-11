@@ -1,8 +1,8 @@
 {% extends 'tournament/scheleton.html' %}
 {% block content %}
     <h1 class="text-3xl mb-5">Players</h1>
-    {% if object_list %}
-        {% regroup object_list by tournament as tournaments_list %}
+    {% if players %}
+        {% regroup players by tournament as tournaments_list %}
         {% for tournament in tournaments_list %}
             <h2 class="text-2xl">{{ tournament.grouper }}</h2>
             <div class="flex flex-wrap -mx-4">
@@ -16,10 +16,12 @@
                                     {{ player.tournament }}
                                 </p>
                             </div>
-                            <a href="{{ player.get_absolute_url }}"
-                               class="p-2 material-icons text-xl text-red-500 self-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                                &#xe872;
-                            </a>
+                            {% if user.is_superuser or user.is_authenticated and player.tournament.author == user and not player.tournament.is_started %}
+                                <a href="{{ player.get_absolute_url }}"
+                                   class="p-2 material-icons text-xl text-red-500 self-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                                    &#xe872;
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
@@ -32,7 +34,7 @@
         </div>
     {% endif %}
     {% if user.is_authenticated %}
-        <a href="{% url 'players_add' %}" class="absolute bottom-7 right-7 btn-round-primary"
+        <a href="{% url 'players_add' %}" class="fixed bottom-12 right-7 btn-round-primary"
            title="Add new tournament"><span
                 class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 material-icons text-2xl align-middle">&#xe145;</span>
         </a>

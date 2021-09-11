@@ -1,11 +1,11 @@
 {% extends 'tournament/scheleton.html' %}
 {% block content %}
     <h1 class="text-3xl mb-5">Tournaments - History</h1>
-    {% if object_list %}
+    {% if past_tournaments %}
         <div class="flex flex-wrap -mx-4">
             {% for tournament in past_tournaments %}
-                <a href="{{ tournament.get_absolute_url }}" class="group p-4 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
-                    <div class="h-full border border-gray-400 shadow-lg p-4 dark:bg-gray-800 group-hover:bg-gray-200 dark:group-hover:bg-gray-700 transition-colors">
+                <div class="group p-4 w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
+                    <div class="h-full border border-gray-400 shadow-lg p-4 dark:bg-gray-800 transition-colors">
                         <h2 class="text-xl title-font text-gray-800 break-words dark:text-gray-200 transition-colors">{{ tournament.name }}</h2>
                         <div class="text-center flex justify-between w-full">
                             <p class="mr-3 inline-flex items-center text-sm py-1">
@@ -17,14 +17,26 @@
                                 {{ tournament.max_players }}
                             </p>
                         </div>
+                        <div class="text-center flex justify-between w-full">
+                            {% if user.is_superuser or user.is_authenticated and tournament.author == user and not tournament.is_started %}
+                                <a href="{{ tournament.get_absolute_url }}/delete"
+                                   class="p-2 material-icons text-xl text-red-500 self-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                                    &#xe872;
+                                </a>
+                            {% endif %}
+                            <a href="{{ tournament.get_absolute_url }}"
+                               class="p-2 material-icons text-xl text-primary self-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                                &#xe5c8;
+                            </a>
+                        </div>
                     </div>
-                </a>
+                </div>
             {% endfor %}
         </div>
     {% else %}
         <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
             <p class="font-bold">Warning</p>
-            <p>No tournaments are available!</p>
+            <p>No history tournaments are available!</p>
         </div>
     {% endif %}
 {% endblock %}

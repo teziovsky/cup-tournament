@@ -3,7 +3,7 @@
     {% block content %}
         <div class="min-height flex py-5">
             <div class="mx-auto self-center w-full xs:p-0 sm:max-w-md">
-                <h1 class="font-bold text-center text-3xl mb-5">Add tournament</h1>
+                <h1 class="font-bold text-center text-3xl mb-5">Update scores!</h1>
                 <div class="w-full divide-y divide-gray-200 shadow-lg bg-white dark:bg-gray-800 dark:text-white transition-colors">
                     <form action="" method="POST" class="px-5 py-7 custom-input grid grid-cols-3 gap-y-3">
                         {% csrf_token %}
@@ -19,7 +19,7 @@
                             {% endif %}
                         {% endfor %}
                         <button type="submit" class="btn-primary w-full font-semibold col-span-3 mt-2">
-                            <span class="inline-block mr-1">Add</span>
+                            <span class="inline-block mr-1">Update</span>
                         </button>
                     </form>
                     {% if messages %}
